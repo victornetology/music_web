@@ -1,49 +1,3 @@
---создаем таблицы
-CREATE TABLE IF NOT EXISTS track(
-	id SERIAL PRIMARY KEY,
-	name VARCHAR(40) NOT NULL,
-	len_track TIME NOT NULL,
-	album_id INTEGER NOT NULL REFERENCES album(id)
-);
-
-CREATE TABLE IF NOT EXISTS album(
-	id SERIAL PRIMARY KEY,
-	name VARCHAR(40) NOT NULL,
-	year_album INTEGER NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS collection(
-	id SERIAL PRIMARY KEY,
-	name VARCHAR(40) NOT NULL,
-	year_collection INTEGER NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS collection_track(
-	track_id INTEGER REFERENCES track(id),
-	collection_id INTEGER REFERENCES collection(id)
-);
-
-
-CREATE TABLE IF NOT EXISTS artist(
-	id SERIAL PRIMARY KEY,
-	name VARCHAR(40) NOT NULL,
-	nick VARCHAR(40) 
-);
-
-CREATE TABLE IF NOT EXISTS artist_album(
-	artist_id INTEGER REFERENCES artist(id),
-	album_id INTEGER REFERENCES album(id)
-);
-
-CREATE TABLE IF NOT EXISTS genre(
-	id serial PRIMARY KEY,
-	name VARCHAR(40) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS artist_genre(
-	artist_id INTEGER REFERENCES artist(id),
-	genre_id INTEGER REFERENCES genre(id)
-);
 
 -- добовляем артистов и ники
 INSERT INTO artist (name)
@@ -128,7 +82,7 @@ VALUES (1,1), (2,2), (3,3), (4,4), (5,5), (6,6), (7,7), (8,8), (9,9);
 
 -- добовляем track
 INSERT INTO track (name, len_track, album_id)
-VALUES ('Its My Life', '3:44', 1), ('Thank You For Loving Me', '4:01', 1);
+VALUES ('Its my Life', '3:44', 1), ('Thank You For Loving Me', '4:01', 1);
 
 INSERT INTO track (name, len_track, album_id)
 VALUES ('What Ive Done', '3:29', 2), ('No More Sorrow', '5:05', 2);
@@ -185,34 +139,6 @@ VALUES ('Bast 1994', 1994)
 INSERT INTO collection_track(track_id, collection_id)
 VALUES (1,1), (2,1), (3,2), (4,2), (5,3), (6,3), (7,4), (8,4), (13,4), (14,4), 
 (9,5), (10,5), (11,6), (12,6), (15,7), (16,7), (17,8), (18,8);
-
-
--- select запросы
--- название и год выхода альбомов, вышедших в 2018 году
-SELECT name, year_album FROM album
-WHERE year_album = 2018;
-
--- название и продолжительность самого длительного трека
-SELECT name, len_track FROM track
-WHERE len_track=(SELECT MAX(len_track) FROM track);
-
--- название треков, продолжительность которых не менее 3,5 минуты
-SELECT name, len_track FROM track
-WHERE len_track >= '3:50';
-
--- названия сборников, вышедших в период с 2018 по 2020 год включительно
-SELECT name, year_collection FROM collection
-WHERE year_collection BETWEEN 2018 AND 2020;
-
--- исполнители, чье имя состоит из 1 слова
-SELECT name FROM artist
-WHERE name NOT LIKE '% %';
-
--- название треков, которые содержат слово "мой"/"my"
-SELECT name FROM track
-WHERE name LIKE '%my%'
-
-
 
 
 
