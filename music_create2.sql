@@ -1,16 +1,15 @@
-drop table collection_track;
+
+CREATE TABLE IF NOT EXISTS album(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(40) NOT NULL,
+	year_album INTEGER NOT NULL
+);
 
 CREATE TABLE IF NOT EXISTS track(
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(40) NOT NULL,
 	len_track TIME NOT NULL,
 	album_id INTEGER REFERENCES album(id)
-);
-
-CREATE TABLE IF NOT EXISTS album(
-	id SERIAL PRIMARY KEY,
-	name VARCHAR(40) NOT NULL,
-	year_album INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS collection(

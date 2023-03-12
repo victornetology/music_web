@@ -10,7 +10,8 @@ VALUES
 	('Ed Sheeran', NULL),
 	('Stefani Joanne', 'Lady Gaga'),
 	('Ryan Bingham', NULL),
-	('Louis Armstrong', NULL);
+	('Louis Armstrong', NULL)
+	('Benni Benassi', 'Benni');
 
 -- добовляем жанры
 INSERT INTO genre (name)
@@ -23,7 +24,7 @@ VALUES
 
 -- добовляем значения в artist_genre
 INSERT INTO artist_genre (artist_id, genre_id)
-VALUES (1,2), (2,2), (3,1), (4,4), (5,1), (6,1), (7,1), (8,5), (9,3), (7,2);
+VALUES (1,2), (2,2), (3,1), (4,4), (5,1), (6,1), (7,1), (8,5), (9,3), (7,2), (10,1);
 
 -- добовляем альбомы
 INSERT INTO album(name, year_album)
@@ -46,16 +47,16 @@ VALUES (1,1), (2,2), (3,3), (4,4), (5,5), (6,6), (7,7), (8,8), (9,9), (7,10);
 -- добовляем track
 INSERT INTO track (name, len_track, album_id)
 VALUES 
-	('Its my Life', '3:44', 1), ('Thank You For Loving Me', '4:01', 1),
-	('What Ive Done', '3:29', 2), ('No More Sorrow', '5:05', 2),
-	('Like a Prayer', '5:51', 3), ('Express Yourself', '4:35', 3),
-	('Without Me', '4:23', 4), ('Sing for the Moment', '5:39', 4),
-	('I Want You Back', '2:58', 5), ('Billie Jean', '4:54', 5),
-	('I See Fire', '4:59', 6), ('Give Me Love', '5:26', 6),
-	('Rain on me', '3:02', 7), ('Replay', '3:06', 7),
-	('The Other Side', '2:08', 8), ('Dont Wait for Me', '4:54', 8),
-	('What A Wonderful World - Single Version', '2:20', 9), ('Hello Dolly', '2:25', 9),
-	('Rain on Me', '4:23', 10);
+	('Its my Life', '00:03:44', 1), ('Thank You For Loving Me', '00:04:01', 1),
+	('What Ive Done', '00:03:29', 2), ('No More Sorrow', '00:05:05', 2),
+	('Like a Prayer', '00:05:51', 3), ('Express Yourself', '00:04:35', 3),
+	('Without Me', '00:04:23', 4), ('Sing for the Moment', '00:05:39', 4),
+	('I Want You Back', '00:02:58', 5), ('Billie Jean', '00:04:54', 5),
+	('I See Fire', '00:04:59', 6), ('Give Me Love', '00:05:26', 6),
+	('Rain on me', '00:03:02', 7), ('Replay', '00:03:06', 7),
+	('The Other Side', '00:02:08', 8), ('Dont Wait for Me', '00:04:54', 8),
+	('What A Wonderful World - Single Version', '00:02:20', 9), ('Hello Dolly', '00:02:25', 9),
+	('Rain on Me', '00:04:23', 10);
 
 -- добовляем collection
 INSERT INTO collection(name, year_collection)
