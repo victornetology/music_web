@@ -5,12 +5,9 @@ GROUP BY ge.name;
 
 -- Количество треков, вошедших в альбомы 2019–2020 годов.
 -- ДОРАБОТКА
--- Добавлено условие BETWEEN
-SELECT al.name, count(tr.name)
+SELECT count(tr.name)
 FROM album al JOIN track tr ON al.id = tr.album_id
-WHERE al.year_album BETWEEN 2019 AND 2020
-GROUP BY al.name;
-
+WHERE al.year_album BETWEEN 2019 AND 2020;
 
 -- Средняя продолжительность треков по каждому альбому.
 SELECT al.name, avg(tr.len_track)
@@ -19,16 +16,12 @@ GROUP BY al.name;
 
 -- Все исполнители, которые не выпустили альбомы в 2020 году.
 -- ДОРАБОТКА
--- Исправлен запрос - добавдена связь RIGHT JOIN
--- чтобы выводились исполнители, у которых нет альбомов
-SELECT ar.name, al.name, al.year_album 
-FROM artist ar 
-LEFT OUTER JOIN 
-(artist_album aa JOIN album al ON aa.album_id = al.id)
-ON ar.id = aa.artist_id
-WHERE al.year_album <> 2020 OR al.year_album IS NULL;
-
-
+SELECT ar.name from artist ar
+where ar.name not in 
+(select ar.name from artist ar 
+join artist_album aa on aa.artist_id = ar.id 
+join album al on al.id = aa.album_id 
+WHERE al.year_album = 2020);
 
 -- Названия сборников, в которых присутствует конкретный исполнитель (выберите его сами).
 SELECT DISTINCT ar.name, cl.name
@@ -45,9 +38,6 @@ ON aa.artist_id = ar.id
 WHERE ar.name = 'Ryan Bingham';
 
 -- Названия альбомов, в которых присутствуют исполнители более чем одного жанра.
--- ДОРАБОТКА
--- Добавлена дополнительная группировка по именам исполнителей
--- (хотя и без нее работало)
 SELECT al.name, count(ge.name) 
 FROM album al
 JOIN artist_album aa 
@@ -61,9 +51,6 @@ GROUP BY al.name, ar.name
 HAVING count(*) > 1;
 
 -- Наименования треков, которые не входят в сборники.
--- ДОРАБОТКА
--- Вложенные запросы работают быстрее связных
--- Данная реализация оптимальнее и эввективнее, чем с JOIN
 SELECT tr.name 
 FROM track tr 
 WHERE tr.id NOT IN (SELECT DISTINCT ct.track_id FROM collection_track ct);
@@ -80,10 +67,6 @@ ON aa.artist_id = ar.id
 WHERE tr.len_track = (SELECT min(tr.len_track) FROM track tr);
 
 -- Названия альбомов, содержащих наименьшее количество треков.
--- ДОРАБОТКА
--- Ничего не надо исправлять (см документацию Postgres)
--- A sort_expression can also be the column label or number of an output column
--- https://www.postgresql.org/docs/current/queries-order.html
 SELECT al.name, count(tr.name)
 FROM album al join track tr on al.id = tr.album_id
 GROUP BY al.name
